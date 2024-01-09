@@ -1,7 +1,7 @@
-import api from "@/api";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import api from "@/api";
 
-export default async function PlayersPage() {
+export default async function BuilderPage() {
   const players = await api.players.list();
 
   return (

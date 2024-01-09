@@ -64,7 +64,12 @@ const api = {
         }
       }
 
-      return Array.from(players.values());
+      return Array.from(players.values())
+        .sort((a, b) => b.score - a.score)
+        .map((player) => ({
+          ...player,
+          score: Math.round(player.score / player.matches),
+        }));
     },
   },
 };
