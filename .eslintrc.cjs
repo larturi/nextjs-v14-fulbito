@@ -23,6 +23,7 @@ module.exports = {
     },
   },
   rules: {
+    "@typescript-eslint/no-misused-promises": "off",
     "prettier/prettier": [
       "warn",
       {
@@ -58,7 +59,7 @@ module.exports = {
       {blankLine: "always", prev: ["const", "let", "var"], next: "*"},
       {blankLine: "any", prev: ["const", "let", "var"], next: ["const", "let", "var"]},
     ],
-    "no-console": "warn",
+    "no-console": "off",
     "react/prop-types": "off",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
