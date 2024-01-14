@@ -1,6 +1,7 @@
 "use client";
 
 import type {Player} from "../../types";
+import type {ChangeEvent} from "react";
 
 import {useState} from "react";
 
@@ -17,6 +18,7 @@ export default function BuilderPageClient({
   onCreate: (formData: FormData) => void;
 }) {
   const [players, setPlayers] = useState<Player[]>(initialPlayers);
+  const [countSelectedPlayers, setCountSelectedPlayers] = useState(0);
 
   function handleAddPlayer(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -47,17 +49,31 @@ export default function BuilderPageClient({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {players.map(({name, matches, score}) => (
+            {players.map(({name}) => (
               <TableRow key={name}>
                 <TableCell className="font-medium">{name}</TableCell>
                 <TableCell className="text-right">
-                  <Checkbox name="player" value={name} />
+                  <Checkbox
+                    name="player"
+                    value={name}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setCountSelectedPlayers(countSelectedPlayers + 1);
+                      } else {
+                        setCountSelectedPlayers(countSelectedPlayers - 1);
+                      }
+
+                      return checked;
+                    }}
+                  />
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-        <Button type="submit">Armar Equipos</Button>
+        <Button disabled={countSelectedPlayers < 10} type="submit">
+          Armar Equipos
+        </Button>
       </form>
     </section>
   );

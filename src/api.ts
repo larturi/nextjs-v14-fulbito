@@ -5,6 +5,7 @@ const api = {
     list: async (): Promise<Match[]> => {
       return fetch(
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vRqAPmkPIYX069I2NYjvkr4iB_xU0J-8sVuGvrHDBS2TBOkKDFH9hB9VSUj9cQ-8qHuKZWMjm3mXIhk/pub?output=tsv",
+        {next: {tags: ["matches"]}},
       )
         .then((res) => res.text())
         .then((text) => {
@@ -68,7 +69,7 @@ const api = {
         .sort((a, b) => b.score - a.score)
         .map((player) => ({
           ...player,
-          score: Math.round(player.score / player.matches),
+          score: Math.round(player.score / player.matches) * 30,
         }));
     },
   },

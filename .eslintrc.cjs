@@ -24,6 +24,7 @@ module.exports = {
   },
   rules: {
     "@typescript-eslint/no-misused-promises": "off",
+    "react/no-array-index-key": "off",
     "prettier/prettier": [
       "warn",
       {
