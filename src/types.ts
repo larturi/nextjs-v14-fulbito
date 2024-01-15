@@ -11,3 +11,19 @@ export interface Player {
   matches: number;
   score: number;
 }
+
+export enum Model {
+  JavaScript = "js",
+  GPT = "gpt",
+}
+
+export const MODELS = {
+  [Model.JavaScript]: {
+    label: "JavaScript",
+    description: "Modelo basado en JavaScript",
+  },
+  [Model.GPT]: {
+    label: "GPT",
+    description: "Modelo basado en GPT",
+  },
+};

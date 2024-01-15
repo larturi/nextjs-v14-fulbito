@@ -1,6 +1,19 @@
-## Getting Started with nextjs-fulbito
+# Getting Started with nextjs-fulbito
 
-First, run the development server:
+This app get the data from Google Spreed Sheet and you can get two teams with the optimal balanced score for each team
+
+## Technologies
+
+- NextJS v14
+- Google Spreed Sheet as Pseudo Data Base
+- OpenIA Integration
+
+## Development Mode
+
+First generate the .env file based in the .env.template. If you want OpenAI integration,
+add your OPENAI_API_KEY.
+
+And run the development server:
 
 ```bash
 npm run dev

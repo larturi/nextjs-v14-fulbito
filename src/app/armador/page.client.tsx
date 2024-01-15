@@ -1,23 +1,25 @@
 "use client";
 
-import type {Player} from "../../types";
-import type {ChangeEvent} from "react";
+import type {Player} from "@/types";
 
 import {useState} from "react";
 
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
+
+import {Model} from "../../types";
 
 export default function BuilderPageClient({
   players: initialPlayers,
   onCreate,
 }: {
   players: Player[];
-  onCreate: (formData: FormData) => void;
+  onCreate: (formData: FormData, model: Model) => void;
 }) {
   const [players, setPlayers] = useState<Player[]>(initialPlayers);
+  const [model, setModel] = useState<Model>(Model.JavaScript);
   const [countSelectedPlayers, setCountSelectedPlayers] = useState(0);
 
   function handleAddPlayer(event: React.FormEvent<HTMLFormElement>) {
@@ -32,6 +34,14 @@ export default function BuilderPageClient({
     event.currentTarget.reset();
   }
 
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+
+    onCreate(formData, model);
+  }
+
   return (
     <section className="m-auto grid max-w-sm gap-4">
       <form className="flex gap-4" onSubmit={handleAddPlayer}>
@@ -40,14 +50,8 @@ export default function BuilderPageClient({
           Agregar jugador
         </Button>
       </form>
-      <form action={onCreate} className="grid gap-4">
+      <form className="grid gap-4" onSubmit={handleSubmit}>
         <Table className="border">
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Nombre</TableHead>
-              <TableHead className="w-[100px]" />
-            </TableRow>
-          </TableHeader>
           <TableBody>
             {players.map(({name}) => (
               <TableRow key={name}>
@@ -74,6 +78,22 @@ export default function BuilderPageClient({
         <Button disabled={countSelectedPlayers < 10} type="submit">
           Armar Equipos
         </Button>
+        <div className="flex items-center justify-center gap-2">
+          <label htmlFor="model">Usar OpenIA</label>
+          <Checkbox
+            name="model"
+            value={model}
+            onCheckedChange={(checked) => {
+              if (checked) {
+                setModel(Model.GPT);
+              } else {
+                setModel(Model.JavaScript);
+              }
+
+              return checked;
+            }}
+          />
+        </div>
       </form>
     </section>
   );
